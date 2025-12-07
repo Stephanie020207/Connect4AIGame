@@ -1,13 +1,11 @@
 import java.util.*;
 
 public class Board {
-
     public static final int ROWS = 6;
     public static final int COLS = 7;
-
+    private static final List<int[]> LINES = generateLines();
     private final char[][] grid;
     private final int[] heights;
-    private static final List<int[]> LINES = generateLines();
     public Board() {
         grid = new char[ROWS][COLS];
         heights = new int[COLS];
@@ -39,12 +37,14 @@ public class Board {
     }
 
     public int dropDisc(int col, char symbol) {
-        if (!isValidMove(col)) return -1;
-        int row = heights[col];
-        int gridRow = ROWS - 1 - row;
-        grid[gridRow][col] = symbol;
-        heights[col]++;
-        return gridRow;
+        for (int r = ROWS - 1; r >= 0; r--) {
+            if (grid[r][col] == '.') {
+                grid[r][col] = symbol;
+                heights[col]++;
+                return r;
+            }
+        }
+        return -1; // column is full
     }
 
     public boolean undo(int col) {
@@ -62,19 +62,72 @@ public class Board {
     }
 
     public boolean checkWin(char symbol) {
-        for (int[] line : LINES) {
-            boolean win = true;
-            for (int idx : line) {
-                int r = idx / COLS;
-                int c = idx % COLS;
-                if (grid[r][c] != symbol) {
-                    win = false;
-                    break;
+        boolean[][] visited = new boolean[ROWS][COLS];
+        // Directions: horizontal, vertical, and diagonals
+        int[][] directions = {
+                {0, 1},
+                {1, 0},
+                {1, 1},
+                {1, -1}
+        };
+        for (int r = 0; r < ROWS; r++) {
+            for (int c = 0; c < COLS; c++) {
+                if (grid[r][c] == symbol && !visited[r][c]) {
+                    if (bfsCheck(r, c, symbol, visited, directions)) {
+                        return true;
+                    }
                 }
             }
-            if (win) return true;
         }
         return false;
+    }
+    private boolean bfsCheck(int startRow, int startCol, char symbol,
+                             boolean[][] visited, int[][] directions) {
+
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(new int[]{startRow, startCol});
+        visited[startRow][startCol] = true;
+
+        while (!queue.isEmpty()) {
+            int[] cell = queue.poll();
+            int r = cell[0];
+            int c = cell[1];
+            for (int[] dir : directions) {
+                int count = 1;
+                int nr = r + dir[0];
+                int nc = c + dir[1];
+                while (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS
+                        && grid[nr][nc] == symbol) {
+                    count++;
+                    nr += dir[0];
+                    nc += dir[1];
+                }
+                if (count >= 4) {
+                    return true;
+                }
+            }
+            // BFS expansion to neighbors
+            int[][] neighbors = {
+                    {0, 1}, {1, 0}, {-1, 0}, {0, -1},
+                    {1, 1}, {1, -1}, {-1, 1}, {-1, -1}
+            };
+            for (int[] n : neighbors) {
+                int nr = r + n[0];
+                int nc = c + n[1];
+                if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS
+                        && !visited[nr][nc]
+                        && grid[nr][nc] == symbol) {
+
+                    visited[nr][nc] = true;
+                    queue.add(new int[]{nr, nc});
+                }
+            }
+        }
+        return false;
+    }
+
+    public static List<int[]> getAllLines() {
+        return LINES;
     }
 
     public boolean isFull() {
@@ -92,10 +145,6 @@ public class Board {
         }
         System.out.println("-----------------------------");
         System.out.println("  0  " + " 1  " + " 2  " + " 3  " + " 4  " + " 5  " + " 6");
-    }
-
-    public static List<int[]> getAllLines() {
-        return LINES;
     }
 
     private static List<int[]> generateLines() {

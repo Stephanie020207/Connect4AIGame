@@ -1,21 +1,41 @@
 import java.util.*;
 
 public class Game {
-
     private final Board board;
-    private final AIPlayer ai;
+    private AIPlayer ai;
     private final Scanner scanner;
     private final char HUMAN = 'O';
     private final char AI = 'X';
     private final int AI_DEPTH = 6;
+    private int difficulty;
 
     public Game() {
         board = new Board();
-        ai = new AIPlayer(AI, HUMAN, AI_DEPTH);
         scanner = new Scanner(System.in);
     }
 
+    private void chooseDifficulty() {
+        System.out.println("Choose difficulty:");
+        System.out.println("1 - Easy");
+        System.out.println("2 - Medium");
+        System.out.println("3 - Hard");
+        while (true) {
+            System.out.print("Enter choice (1-3): ");
+            try {
+                int choice = Integer.parseInt(scanner.nextLine());
+                if (choice >= 1 && choice <= 3) {
+                    difficulty = choice;
+                    break;
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid input!");
+            }
+        }
+    }
+
     public void start() {
+        chooseDifficulty();
+        ai = new AIPlayer(AI, HUMAN, AI_DEPTH, difficulty);
         System.out.println("=== CONNECT 4 (CONSOLE VERSION) ===");
         System.out.println("You are 'O' ; AI is 'X'");
         board.printBoard();

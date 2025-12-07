@@ -1,34 +1,46 @@
 import java.util.*;
 
 public class AIPlayer {
-
     private final char AI;
     private final char HUMAN;
     private final int DEPTH;
     private final MoveEvaluator evaluator;
-    private final Minimax minimax;
+    private Minimax minimax;
+    private int difficulty;
 
-    public AIPlayer(char ai, char human, int depth) {
+    public AIPlayer(char ai, char human, int depth, int difficulty) {
         this.AI = ai;
         this.HUMAN = human;
         this.DEPTH = depth;
+        this.difficulty = difficulty;
         this.evaluator = new MoveEvaluator(ai, human);
-        this.minimax = new Minimax(ai, human, evaluator);
+        if (difficulty == 3) {
+            this.minimax = new Minimax(ai, human, this.evaluator);
+        }
     }
+
 
     public int chooseMove(Board board) {
         List<Integer> moves = board.getLegalMoves();
         if (moves.isEmpty()) return -1;
+        if (difficulty == 1) {
+            return easyMove(board, moves);
+        } else if (difficulty == 2) {
+            return mediumMove(board, moves);
+        } else {
+            return hardMove(board, moves);
+        }
+    }
 
-        // 1) Immediate win
-        Integer winCol = immediateWin(board, AI);
-        if (winCol != null) return winCol;
+    private int easyMove(Board board, List<Integer> moves) {
+        Random rand = new Random();
+        // 100% random
+        return moves.get(rand.nextInt(moves.size()));
+    }
 
-        // 2) Immediate block
-        Integer blockCol = immediateWin(board, HUMAN);
-        if (blockCol != null) return blockCol;
-
-        // 3) Quick scoring + sorting
+    // Medium
+    private int mediumMove(Board board, List<Integer> moves) {
+        // Score all moves
         List<MoveScore> scored = new ArrayList<>();
         for (int c : moves) {
             board.dropDisc(c, AI);
@@ -36,19 +48,47 @@ public class AIPlayer {
             board.undo(c);
             scored.add(new MoveScore(c, s));
         }
+        // Sorting (Merge Sort)
         MoveScore[] arr = scored.toArray(new MoveScore[0]);
         MergeSort.sort(arr);
+
+        // 30% chance pick second best move
+        Random rand = new Random();
+        if (rand.nextInt(100) < 30 && arr.length > 1) {
+            return arr[1].col;
+        }
+        return arr[0].col; // best move
+    }
+
+    // Hard
+    private int hardMove(Board board, List<Integer> moves) {
+
+        Integer winCol = immediateWin(board, AI);
+        if (winCol != null) return winCol;
+
+        Integer blockCol = immediateWin(board, HUMAN);
+        if (blockCol != null) return blockCol;
+
+        List<MoveScore> scored = new ArrayList<>();
+        for (int c : moves) {
+            board.dropDisc(c, AI);
+            int s = evaluator.quickScore(board);
+            board.undo(c);
+            scored.add(new MoveScore(c, s));
+        }
+
+        MoveScore[] arr = scored.toArray(new MoveScore[0]);
+        MergeSort.sort(arr);
+
         List<Integer> orderedMoves = new ArrayList<>();
         for (MoveScore ms : arr) orderedMoves.add(ms.col);
 
-        // 4) Minimax search
         Minimax.Result result =
                 minimax.search(board, DEPTH, Integer.MIN_VALUE, Integer.MAX_VALUE, true, orderedMoves);
 
         int best = result.bestMove;
-        if (best == -1 && !orderedMoves.isEmpty()) {
-            best = orderedMoves.get(0);
-        }
+        if (best == -1 && !orderedMoves.isEmpty()) best = orderedMoves.get(0);
+
         return best;
     }
 
@@ -199,7 +239,7 @@ class Minimax {
             return evaluator.evaluate(board);
         }
         List<Integer> moves = board.getLegalMoves();
-        // reorder moves using heuristic → helps alpha-beta
+        // reorder moves using heuristic -> helps alpha-beta
         MoveScore[] arr = new MoveScore[moves.size()];
         int idx = 0;
         for (int col : moves) {
