@@ -1,14 +1,13 @@
-# Connect 4 AI Game (Java)
-## Implementation of Classical AI Algorithms in a Console-Based Connect 4 Game
-A console-based Connect 4 game featuring AI opponents powered by Minimax with Alpha-Beta pruning and Merge Sort–based move ordering.
-
+# ES234317 - Data Structure and Algorithm (Q)
+## Lecturer: Renny Pradina Kusumawardani, S.T., M.T. <br/>
 **By Group 4:**
 1. Agha Aryo Utomo / 5026241003
 2. Dyandra R-Noor Batari / 5026241051
 3. Maria Stephanie Febryana Kristijanto / 5026241052
-
-**Lecturer:** Renny Pradina Kusumawardani, S.T., M.T. <br/>
-**Course:** ES234317 - Data Structure and Algorithm (Q)
+ 
+# Connect 4 AI Game (Java)
+## Implementation of Classical AI Algorithms in a Console-Based Connect 4 Game
+A console-based Connect 4 game featuring AI opponents powered by Minimax with Alpha-Beta pruning and Merge Sort–based move ordering.
 
 ## Table of Contents
 - Introduction
