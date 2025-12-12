@@ -1,41 +1,84 @@
 # Connect 4 AI Game (Java)
+## Implementation of Classical AI Algorithms in a Console-Based Connect 4 Game
 A console-based Connect 4 game featuring AI opponents powered by Minimax with Alpha-Beta pruning and Merge Sort–based move ordering.
 
 ## Table of Contents
 - Introduction
-- Features
-- Difficulty Levels
-- Algorithms Used
+- Background
+- Project Goals
+- Game Features & Flow
 - System Architecture
-- Code Structure
+- Game Leveling
+- Algorithms Used
+- Conclusion
 
 ## Introduction
-This project is a Java-based Connect 4 game implemented in the console.  
-It includes a fully functional AI opponent capable of playing at three difficulty levels.  
-The AI uses algorithms such as Minimax, Alpha-Beta Pruning, Move Ordering, and Merge Sort to evaluate moves efficiently.  
-The game was developed as part of an academic project focusing on search algorithms, heuristics, and game theory.
+This project is a Java-based Connect 4 game implemented in the console. It implements a console-based Connect 4 game featuring an intelligent AI opponent. <br/>
+The AI is built using classical algorithms such as:
+- Linear Search
+- Breadth-First Search (BFS)
+- Merge Sort (for move ordering)
+- Brute Force (One Depth)
+- Minimax + Alpha-Beta Pruning <br/>
 
-## Features
-- Human vs AI gameplay
-- Three difficulty levels (Easy, Medium, Hard)
-- AI uses Minimax with Alpha-Beta pruning
-- Move ordering using heuristic + Merge Sort
-- BFS-based win checking
+These algorithms are integrated to create a smart, responsive, and adaptive opponent for various difficulty levels.
 
-## Difficulty Levels
-### Easy
-- AI moves are 100% random.
+## Background
+Artificial Intelligence enhances gameplay in strategy games such as Connect 4 by:
+- Analyzing board states
+- Detecting win conditions
+- Predicting optimal moves <br/>
+Connect 4 is simple but strategic, making it an ideal case study for <br/>
 
-### Medium
-- AI scores all legal moves using a heuristic (quickScore)
-- Moves are sorted using **Merge Sort**
-- 30% chance of picking the second-best move
+Algorithms Used:
+- Linear Search → Scan for valid moves
+- Graph-based search (BFS) → Detect winning conditions
+- Sorting (Merge Sort) → Rank moves by strength
+- Brute Force (One Depth) → Evaluate possible moves
+- Minimax + Alpha-Beta Pruning → Decision-making based on future predictions
 
-### Hard
-- Immediate win/block detection
-- Move ordering using heuristic
-- Minimax + Alpha-Beta pruning
-- Depth = 6 search for optimal play
+## Project Goals
+1. Design and Implement an Intelligent AI Opponent
+2. Apply Classical AI Algorithms
+3. Build a Fully Functional Console-Based Strategy Game
+
+## Game Features & Flow
+### Features
+1. 3 AI Difficulty Levels
+   - Easy
+   - Medium
+   - Hard
+2. Interactive Console UI
+3. Game End Detection:
+   - AI & player turns alternate
+   - Win detection using BFS
+   - Board-full → draw
+### Flow
+1. Start Game
+   → Player selects difficulty
+   → Board initialized
+2. Player Turn
+   → Human selects column (0–6)
+   → Disc 'O' is placed
+3. AI Turn
+   → Easy: random
+   → Medium: heuristic + merge sort
+   → Hard: immediate win/block + minimax
+4. Win/Draw Check
+   → BFS-based win detection
+   → Full board → draw
+
+## System Architecture
+The system follows an Object-Oriented Programming (OOP) approach with 4 main classes:
+1. Main.java: The entry point of the game. It initializes the game and starts the gameplay loop.
+2. Game.java: This class controls the game flow, including player turns and alternating between the human player and AI.
+3. Board.java: This class manages the board grid and contains methods for placing discs, printing the board, and checking for winning conditions.
+4. AIPlayer.java: Implements the AI logic, including decision-making through algorithms like Minimax and heuristic-based evaluations.
+
+## Game Leveling
+1. Easy: 100% random moves
+2. Medium: Heuristic scoring + merge sort + 30% randomness
+3. Hard: Brute Force (One Depth) + heuristic sort + minimax + alpha-beta pruning
 
 ## Algorithms Used
 ### Linear Search (Move Selection)
