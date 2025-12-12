@@ -2,6 +2,14 @@
 ## Implementation of Classical AI Algorithms in a Console-Based Connect 4 Game
 A console-based Connect 4 game featuring AI opponents powered by Minimax with Alpha-Beta pruning and Merge Sort–based move ordering.
 
+**By Group 4:**
+1. Agha Aryo Utomo / 5026241003
+2. Dyandra R-Noor Batari / 5026241051
+3. Maria Stephanie Febryana Kristijanto / 5026241052
+
+**Lecturer:** Renny Pradina Kusumawardani, S.T., M.T. <br/>
+**Course:** ES234317 - Data Structure and Algorithm (Q)
+
 ## Table of Contents
 - Introduction
 - Background
@@ -113,6 +121,8 @@ In this project, BFS is responsible for determining whether a player has won aft
 <br/>- Board.checkWin()
 <br/>- Board.bfsCheck()
 
+![image_alt](https://github.com/Stephanie020207/Connect4AIGame/blob/master/BFS%20Graph.jpeg)
+
 ### 3. Merge Sort (Move Ordering)
 **A. Definition:** <br/>
 Merge Sort is a stable O(n log n) divide-and-conquer sorting algorithm that recursively splits a list into halves, sorts them, and merges the results in order.
@@ -162,7 +172,16 @@ In this project, the Hard AI begins by generating all possible legal moves and s
 <br/>- Minimax.search()
 <br/>- Minimax.minimax()
 
+![image_alt](https://github.com/Stephanie020207/Connect4AIGame/blob/master/Minimax%20Tree.jpeg)
+
 ## Conclusion
 1. The project successfully built an intelligent AI opponent for Connect 4 using classical algorithms such as Minimax and Alpha-Beta Pruning.
 2. Classical algorithms including Linear Search, Merge Sort, BFS, Brute-Force Evaluation, and Minimax were effectively integrated to support game logic and AI behavior.
 3. A fully functional console-based game was created, demonstrating how algorithmic techniques can be applied to real gameplay scenarios.
+
+## Other Projects from Class Q
+1. Group 1: github.com/yelllsit-glitch/Final-Project-ASD
+2. Group 2: github.com/riozakyrizky/Final-Project-ASD-2025
+3. Group 3: github.com/strupwa/RevASD/
+4. Group 4: github.com/Stephanie020207/Connect4AIGame
+5. Group 5: github.com/Daffa-001/ASD-IUP-FinalProject
