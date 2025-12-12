@@ -73,7 +73,9 @@ The system follows an Object-Oriented Programming (OOP) approach with 4 main cla
 1. Main.java: The entry point of the game. It initializes the game and starts the gameplay loop.
 2. Game.java: This class controls the game flow, including player turns and alternating between the human player and AI.
 3. Board.java: This class manages the board grid and contains methods for placing discs, printing the board, and checking for winning conditions.
-4. AIPlayer.java: Implements the AI logic, including decision-making through algorithms like Minimax and heuristic-based evaluations.
+4. AIPlayer.java: Implements the AI logic, including decision-making through algorithms like Minimax and heuristic-based evaluations. <br/>
+
+![image_alt](https://github.com/Stephanie020207/Connect4AIGame/blob/master/Connect%204%20AI%20Project%20UML.png)
 
 ## Game Leveling
 1. Easy: 100% random moves
@@ -81,69 +83,86 @@ The system follows an Object-Oriented Programming (OOP) approach with 4 main cla
 3. Hard: Brute Force (One Depth) + heuristic sort + minimax + alpha-beta pruning
 
 ## Algorithms Used
-### Linear Search (Move Selection)
-Used to iterate through the list of legal moves and evaluate them one by one. <br/>
-The AI checks each possible column sequentially to test:
-- Whether it leads to an immediate win
-- Whether it must block the player
-- Whether it produces a good heuristic score <br/>
-This is a simple but effective searching strategy for small move lists.
+### 1. Linear Search (Move Selection)
+**A. Definition:** <br/>
+Linear Search scans elements sequentially, checking each item one by one.
 
-### BFS (Breadth-First Search) for Win Detection
-The board uses BFS to explore connected cells in all directions (horizontal, vertical, diagonal) to check whether a player has formed a 4-in-a-row sequence. <br/>
-BFS ensures:
-- Systematic exploration of the board as a graph
-- Fast detection of connected components
-- Efficient win detection usable by both AI and human moves
+**B. Purpose:** <br/>
+Linear Search is used to sequentially examine each column and row on the board to determine valid moves, locate the first empty slot in a column, check whether the board is full, and evaluate each potential move in order. This approach is efficient and appropriate given that Connect 4’s board only contains seven columns, making sequential scanning both simple and fast.
 
-### Merge Sort (Move Ordering)
-The AI evaluates every legal move using a heuristic (quickScore), then sorts all moves in descending order using Merge Sort. <br/>
-Reasons:
-- Merge Sort is stable and O(n log n)
-- Ordering strong moves early improves alpha-beta pruning
-- Helps Minimax “see” good moves sooner → increases efficiency
+**C. Role in This Project:** <br/> 
+In this project, Linear Search enables the AI to examine all legal moves one by one to detect immediate winning opportunities, identify moves that must be Bblocked to prevent the player from winning, and compute heuristic scores for each potential move. It also supports the fundamental mechanics of the game by handling valid move detection, disc placement, and full-board detection.
 
-### Brute Force One-Depth Evaluation (Medium & Hard Mode)
-Before using Minimax, the AI performs a one-depth brute-force simulation: <br/>
-For each legal move:
-1. Drop the disc
-2. Evaluate the board with a heuristic function
-3. Undo the move <br/>
-This brute force check helps in:
-- Medium difficulty scoring
-- Hard difficulty immediate-win and immediate-block detection
-- Move ordering for Minimax
+**D. Code Locations:**
+<br/>- Board.getLegalMoves()
+<br/>- Board.dropDisc()
+<br/>- Board.isFull()
+<br/>- AIPlayer.immediateWin()
 
-### Minimax Algorithm (with Alpha-Beta Pruning)
-A classic game theory algorithm used to simulate future moves and choose the best possible action. <br/>
-Minimax:
-- Recursively explores future game states
-- Assumes the opponent plays optimally
-- Alternates between maximizing (AI) and minimizing (human) <br/>
-Alpha-Beta Pruning:
-- Eliminates unnecessary branches
-- Greatly speeds up Minimax
-- Works better when combined with move ordering (Merge Sort) <br/>
-This is what enables the Hard Mode AI to play strategically and look several moves ahead.
+### 2. BFS (Breadth-First Search) for Win Detection
+**A. Definition:** <br/>
+BFS explores neighboring cells level-by-level using a queue, making it ideal for detecting connected components in grid-based games such as Connect 4.
 
-## System Architecture
-The project is structured into four main classes:
+**B. Purpose:** <br/>
+BFS is used to systematically examine the board for any sequence of four connected discs in horizontal, vertical, or diagonal directions. Its level-by-level exploration ensures that win detection is efficient, accurate, and consistent after every move.
 
-- `Main` – Starts the game
-- `Game` – Handles player turns, difficulty levels, and game loop
-- `Board` – Manages game grid, win checking (BFS), legal moves
-- `AIPlayer` – Handles AI logic and difficulty levels
+**C. Role in This Project:** <br/>
+In this project, BFS is responsible for determining whether a player has won after each disc placement. The board scans for the player’s discs, expands outward using BFS to explore all connected neighbors, counts how many are linked in each direction, and declares a win if four connected discs are found. This process ensures fast and reliable win detection for both the human player and the AI.
 
-Additional helper classes:
-- `MoveEvaluator` – Scoring heuristic
-- `Minimax` – Minimax search algorithm with Alpha-Beta pruning
-- `MergeSort` – Sorting move scores
+**D. Code Locations:**
+<br/>- Board.checkWin()
+<br/>- Board.bfsCheck()
 
-## Code Structure
-- Main.java
-- Game.java
-- Board.java
-- AIPlayer.java
-- README.md
-- Clean object-oriented structure (Game, Board, AIPlayer, Minimax classes)
-- Error handling for invalid input
+### 3. Merge Sort (Move Ordering)
+**A. Definition:** <br/>
+Merge Sort is a stable O(n log n) divide-and-conquer sorting algorithm that recursively splits a list into halves, sorts them, and merges the results in order.
+
+**B. Purpose:** <br/>
+Merge Sort is used to sort all evaluated moves from best to worst based on their heuristic scores. By ordering the strongest moves early, the AI can explore promising options sooner, significantly improving the effectiveness of alpha-beta pruning and making both Medium and Hard difficulty modes more efficient and intelligent.
+
+**C. Role in This Project:** <br/>
+In this project, the AI first assigns a heuristic score to every legal move, then applies Merge Sort to arrange these moves from highest priority to lowest. The sorted list is then provided to either the Medium AI decision process or the Minimax algorithm used in Hard mode. This ensures that the AI consistently examines the most advantageous moves first, resulting in smarter and faster decision-making.
+
+**D. Code Locations:**
+<br/>- AIPlayer.mediumMove()
+<br/>- AIPlayer.hardMove()
+<br/>- Minimax.minimax()
+<br/>- MergeSort class
+
+### 4. Brute Force One-Depth Evaluation (Medium & Hard Mode)
+**A. Definition:** <br/>
+Brute-force one-depth search evaluates all possible immediate moves by simulating each option exactly one turn ahead (depth = 1).
+
+**B. Purpose:** <br/>
+This algorithm is used to quickly identify any move that results in an instant win for the AI or an immediate threat that must be blocked to prevent the human from winning on the next turn. It also generates fast heuristic scores for Medium mode and prepares an ordered list of strong moves for Hard mode, improving the overall efficiency of the AI’s decision-making.
+
+**C. Role in This Project:** <br/>
+In this project, the Medium AI relies on the heuristic scores produced by the one-depth brute-force simulation to choose reasonably strong moves. The Hard AI uses brute-force evaluation to check for instant winning opportunities, detect immediate threats that require blocking, and pre-sort moves before passing them to the Minimax algorithm for deeper strategic analysis. This ensures that the AI avoids simple tactical mistakes and responds intelligently to short-term threats.
+
+**D. Code Locations:**
+<br/>- AIPlayer.immediateWin()
+<br/>- AIPlayer.mediumMove()
+<br/>- AIPlayer.hardMove()
+
+### 5. Minimax Algorithm (with Alpha-Beta Pruning)
+**A. Minimax Definition:** <br/>
+Minimax is a classic game-tree search algorithm in which the MAX player (AI) attempts to maximize the evaluation score, while the MIN player (human) tries to minimize it. The algorithm recursively explores future game states, alternating between maximizing and minimizing layers, to determine the optimal move.
+
+**B. Alpha-Beta Pruning Definition:** <br/>
+Alpha-Beta pruning is an optimization technique applied to Minimax that eliminates branches of the game tree that cannot possibly influence the final decision. By skipping these unnecessary calculations, the algorithm becomes significantly faster without affecting the accuracy of its results.
+
+**C. Purpose:** <br/> 
+Minimax with alpha-beta pruning allows the Hard AI to plan several moves ahead by simulating potential future board states. It helps the AI predict and block long-term threats, choose the most advantageous strategic actions, and behave optimally in complex situations. The pruning mechanism ensures this deeper search is computationally efficient.
+
+**D. Role in This Project:** <br/>
+In this project, the Hard AI begins by generating all possible legal moves and sorting them using Merge Sort so that promising moves are explored first. It then uses the Minimax algorithm to evaluate deeper future game states and applies alpha-beta pruning to eliminate branches that would not affect the final decision. This combination enables the Hard AI to make strong, strategic, and efficient decisions during gameplay.
+
+**E. Code Locations:**
+<br/>- AIPlayer.hardMove()
+<br/>- Minimax.search()
+<br/>- Minimax.minimax()
+
+## Conclusion
+1. The project successfully built an intelligent AI opponent for Connect 4 using classical algorithms such as Minimax and Alpha-Beta Pruning.
+2. Classical algorithms including Linear Search, Merge Sort, BFS, Brute-Force Evaluation, and Minimax were effectively integrated to support game logic and AI behavior.
+3. A fully functional console-based game was created, demonstrating how algorithmic techniques can be applied to real gameplay scenarios.
