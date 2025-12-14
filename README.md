@@ -84,6 +84,8 @@ By combining classical algorithms such as Linear Search, BFS, Merge Sort, Brute 
 ## Program Screenshots
 ### Choose Difficulty
 ![image_alt](https://github.com/Stephanie020207/Connect4AIGame/blob/master/chooseDifficulty.jpeg)
+### Initial Board
+![image_alt](https://github.com/Stephanie020207/Connect4AIGame/blob/master/initialBoard.jpeg)
 
 ## System Architecture
 The system follows an Object-Oriented Programming (OOP) approach with 4 main classes:
