@@ -81,6 +81,10 @@ By combining classical algorithms such as Linear Search, BFS, Merge Sort, Brute 
    → BFS-based win detection
    → Full board → draw
 
+## Program Screenshots
+### Choose Difficulty
+![image_alt](https://github.com/Stephanie020207/Connect4AIGame/blob/master/chooseDifficulty.jpeg)
+
 ## System Architecture
 The system follows an Object-Oriented Programming (OOP) approach with 4 main classes:
 1. Main.java: The entry point of the game. It initializes the game and starts the gameplay loop.
