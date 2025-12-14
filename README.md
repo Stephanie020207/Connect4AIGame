@@ -196,6 +196,9 @@ In this project, the Hard AI begins by generating all possible legal moves and s
 2. Classical algorithms including Linear Search, Merge Sort, BFS, Brute-Force Evaluation, and Minimax were effectively integrated to support game logic and AI behavior.
 3. A fully functional console-based game was created, demonstrating how algorithmic techniques can be applied to real gameplay scenarios.
 
+## Demo Video
+https://youtu.be/YZ3gVEJ39WA?si=js58am2mlDCmKCRE
+
 ## Other Projects from Class Q
 1. Group 1: github.com/yelllsit-glitch/Final-Project-ASD
 2. Group 2: github.com/riozakyrizky/Final-Project-ASD-2025
