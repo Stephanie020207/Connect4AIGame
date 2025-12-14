@@ -14,8 +14,11 @@
 ## Table of Contents
 - Introduction
 - Background
+- Proposed Solution
+- Problem Formulation
 - Project Goals
 - Game Features & Flow
+- Program Screeshots
 - System Architecture
 - Game Leveling
 - Algorithms Used
@@ -49,6 +52,11 @@ Algorithms Used:
 ## Proposed Solution
 This project provides a console-based Connect 4 game equipped with an intelligent AI opponent.  
 By combining classical algorithms such as Linear Search, BFS, Merge Sort, Brute Force evaluation, and Minimax with Alpha-Beta pruning, the system is able to make strategic decisions, detect winning conditions efficiently, and offer multiple difficulty levels for players.
+
+## Problem Formulation
+1. How can an intelligent AI opponent be designed and implemented for a console-based Connect 4 game?
+2. How can classical algorithms be applied to support strategic decision-making in the game?
+3. How can these algorithms be combined to produce a fully functional and playable Connect 4 strategy game?
 
 ## Project Goals
 1. Design and Implement an Intelligent AI Opponent
@@ -192,9 +200,9 @@ In this project, the Hard AI begins by generating all possible legal moves and s
 ![image_alt](https://github.com/Stephanie020207/Connect4AIGame/blob/master/Minimax%20Tree.jpeg)
 
 ## Conclusion
-1. The project successfully built an intelligent AI opponent for Connect 4 using classical algorithms such as Minimax and Alpha-Beta Pruning.
-2. Classical algorithms including Linear Search, Merge Sort, BFS, Brute-Force Evaluation, and Minimax were effectively integrated to support game logic and AI behavior.
-3. A fully functional console-based game was created, demonstrating how algorithmic techniques can be applied to real gameplay scenarios.
+1. This project successfully designed and implemented an intelligent AI opponent for a console-based Connect 4 game by applying strategic decision-making techniques using classical algorithms such as Minimax with Alpha-Beta pruning.
+2. Classical algorithms including Linear Search, Breadth-First Search (BFS), Merge Sort, Brute-Force one-depth evaluation, and Minimax were effectively integrated to support move validation, win detection, move ordering, and future-state prediction.
+3. As a result, a fully functional console-based Connect 4 strategy game was developed, demonstrating how classical algorithmic techniques can be applied to real gameplay scenarios with multiple difficulty levels.
 
 ## Demo Video
 https://youtu.be/YZ3gVEJ39WA?si=js58am2mlDCmKCRE
